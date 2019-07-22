@@ -1,8 +1,22 @@
 " Author: Yist Lin
 
-" Use Vim settings, rather then Vi settings
-" This must be first, because it changes other options as a side effect.
-set nocompatible
+set nocompatible    " be iMproved, required
+filetype off    " required
+
+" Set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'itchyny/lightline.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'morhetz/gruvbox'
+
+" All of your Plugins must be added before the following line
+call vundle#end()
 
 " Set up filetype detection
 filetype plugin indent on
@@ -47,7 +61,7 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
 endif
 
 " Set up Pathogen
-execute pathogen#infect()
+" execute pathogen#infect()
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
