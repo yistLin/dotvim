@@ -2,7 +2,7 @@
 " referred from https://dougblack.io/words/a-good-vimrc.html
 
 set nocompatible  " required in VIM
-filetype off      " required
+filetype off      " required by Vundle
 
 " Vundle {{{
 set rtp+=~/.vim/bundle/Vundle.vim  " runtime path to include Vundle
@@ -16,6 +16,8 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-commentary'
 Plugin 'scrooloose/nerdtree'
+Plugin 'godlygeek/tabular'
+Plugin 'lifepillar/vim-solarized8'
 call vundle#end()
 " }}}
 
@@ -34,11 +36,14 @@ set expandtab      " expand tab to spaces
 
 " Colors {{{
 syntax enable
-set background=dark
-colorscheme gruvbox
 if (has("termguicolors"))
-  set termguicolors
+    set termguicolors
+    " set Vim-specific sequences for RGB colors
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
+set background=dark
+colorscheme solarized8_flat
 " }}}
 
 " UI {{{
@@ -53,6 +58,7 @@ set cursorline         " highlight current line
 set showmatch          " highlight matching [{()}]
 set laststatus=2       " display the status line
 set display+=lastline  " always display the last line
+set noshowmode         " not needed while using lightline
 " }}}
 
 " Searching {{{
@@ -60,28 +66,10 @@ set incsearch  " search as characters are entered
 set hlsearch   " highlight matches
 " }}}
 
-" Movement {{{
-
-" move vertically by visual line
-nnoremap j gj
-nnoremap k gk
-
-" jump to beginning/end of line
-nnoremap B ^
-nnoremap E $
-nnoremap $ <nop>
-nnoremap ^ <nop>
-
-" move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-" }}}
-
 " Autogroups {{{
 augroup configgroup
 
+    " clean out all previous commands
     autocmd!
 
     " load .vimrc source when saved
@@ -93,8 +81,11 @@ augroup configgroup
     " set up filetype for special filetypes
     autocmd BufNewFile,BufRead *.ejs set filetype=html
 
-    " set this if comment function not supported in vim-commentary
-    " autocmd FileType apache setlocal commentstring=#\ %s
+    " jump to the last edited position
+    autocmd BufReadPost *
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
 
     " open NERDTree when vim starts up on opening a directory
     autocmd StdinReadPre * let s:std_in=1
@@ -119,18 +110,35 @@ set showcmd   " show the last command entered in the bottom line
 set wildmenu  " visual autocomplet for command menu
 " }}}
 
-" Commands Abbreviations {{{
-cabbrev E Explore
+" Remapping {{{
+" move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
+" jump to beginning/end of line
+nnoremap B ^
+nnoremap E $
+nnoremap $ <nop>
+nnoremap ^ <nop>
+
+" move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" map the <Space> key to toggle a selected fold opened/closed.
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
 " }}}
 
 " Plugin: Lightline {{{
 let g:lightline = {
-  \ 'colorscheme': 'wombat',
+  \ 'colorscheme': 'solarized',
   \ }
 " }}}
 
 " Plugin: NERDTree {{{
-
 " delete the buffer of file which is deleted through NERDTree
 let NERDTreeAutoDeleteBuffer = 1
 
@@ -143,7 +151,6 @@ let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
 
 " set up window size
 let g:NERDTreeWinSize=25
-
 " }}}
 
 " Enable backspacing
