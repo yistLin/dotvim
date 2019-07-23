@@ -1,155 +1,157 @@
 " Author: Yist Lin
+" referred from https://dougblack.io/words/a-good-vimrc.html
 
-set nocompatible    " be iMproved, required
-filetype off    " required
+set nocompatible  " required in VIM
+filetype off      " required
 
-" Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+" Vundle {{{
+set rtp+=~/.vim/bundle/Vundle.vim  " runtime path to include Vundle
 call vundle#begin()
-
-" Let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
+Plugin 'VundleVim/Vundle.vim'      " let Vundle manage Vundle (required)
 Plugin 'itchyny/lightline.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'morhetz/gruvbox'
-
-" All of your Plugins must be added before the following line
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-commentary'
+Plugin 'scrooloose/nerdtree'
 call vundle#end()
+" }}}
 
-" Set up filetype detection
-filetype plugin indent on
-
-" Set up encoding
+" Encoding {{{
 set encoding=utf-8
 set fileencodings=utf8,big5,big5-hkscs,gbk,latin1
+" }}}
 
-" Backup & History
-set nobackup
-set nowritebackup
-set history=50		" keep 50 lines of command line history
+" Spaces & Tabs {{{
+set smartindent
+set tabstop=4      " number of visual spaces a tab
+set shiftwidth=4   " Indents will have a width of 4
+set softtabstop=4  " number of spaces for a tab
+set expandtab      " expand tab to spaces
+" }}}
 
-" Display incomplete commands
-set showcmd
-
-" Searching
-set incsearch
-set hlsearch
-
-" Color scheme
-set t_Co=256
-
-if (has("termguicolors"))
-  set termguicolors
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-
+" Colors {{{
 syntax enable
 set background=dark
 colorscheme gruvbox
-
-highlight NonText guibg=#060606
-highlight Folded  guibg=#0A0A0A guifg=#9090D0
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
-  syntax on
-  set hlsearch
+if (has("termguicolors"))
+  set termguicolors
 endif
+" }}}
 
-" Set up Pathogen
-" execute pathogen#infect()
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-  " Enable file type detection.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
-
-  " Set File type to 'text' for files ending in .txt
-  autocmd BufNewFile,BufRead *.txt setfiletype text
-
-  " Enable Python code auto complete by Omni Auto Complete
-  autocmd FileType python set omnifunc=pythoncomplete#Complete tabstop=8 shiftwidth=4 softtabstop=4 autoindent expandtab
-
-  " Enable soft-wrapping for text files
-  autocmd FileType text,markdown,html,xhtml,eruby setlocal wrap linebreak nolist
-
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
-
-  " Automatically load .vimrc source when saved
-  autocmd BufWritePost .vimrc source $MYVIMRC
-
-  " Automatically trim trailing spaces
-  autocmd FileType c,cpp,python,javascript,html,tex autocmd BufWritePre <buffer> %s/\s\+$//e
-
-  " Automatically set up filetype for special filetypes
-  autocmd BufNewFile,BufRead *.ejs set filetype=html
-
-  augroup END
-
-endif
-
-" Always display the status line
-set laststatus=2
-
-" Display the last line even if it's longer than a single line
-set display+=lastline
-
-" Abbreviate commands
-cabbrev E Explore
-
-" Local config
-if filereadable(".vimrc.local")
-  source .vimrc.local
-endif
-
-" Use Ack instead of Grep when available
-if executable("ack")
-  set grepprg=ack\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
-endif
-
-" Numbers
+" UI {{{
+filetype on         " turn on filetype detection
+filetype indent on  " load indent/example.vim
+filetype plugin on  " load ftplugin/example.vim
 set number
 set numberwidth=6
-
-" case only matters with mixed case expressions
-set ignorecase
-set smartcase
-
-" VIM underline the current line
-set cursorline
-
-" Fix backspace
-set bs=2
-
-" Set indentation
-set smartindent
-set tabstop=4       " The width of a TAB is set to 4.
-                    " Still it is a \t. It is just that
-                    " Vim will interpret it to be having
-                    " a width of 4.
-set shiftwidth=4    " Indents will have a width of 4.
-set softtabstop=4   " Sets the number of columns for a TAB.
-set expandtab       " Expand TABs to spaces.
-
-" Set up auto-wrap
 set wrap
-set linebreak
 set breakindent
-" set showbreak=
+set cursorline         " highlight current line
+set showmatch          " highlight matching [{()}]
+set laststatus=2       " display the status line
+set display+=lastline  " always display the last line
+" }}}
 
-" Set up lightline
+" Searching {{{
+set incsearch  " search as characters are entered
+set hlsearch   " highlight matches
+" }}}
+
+" Movement {{{
+
+" move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+
+" jump to beginning/end of line
+nnoremap B ^
+nnoremap E $
+nnoremap $ <nop>
+nnoremap ^ <nop>
+
+" move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+" }}}
+
+" Autogroups {{{
+augroup configgroup
+
+    autocmd!
+
+    " load .vimrc source when saved
+    autocmd BufWritePost .vimrc source $MYVIMRC
+
+    " trim trailing spaces
+    autocmd FileType c,cpp,python,javascript,html,tex autocmd BufWritePre <buffer> %s/\s\+$//e
+
+    " set up filetype for special filetypes
+    autocmd BufNewFile,BufRead *.ejs set filetype=html
+
+    " set this if comment function not supported in vim-commentary
+    " autocmd FileType apache setlocal commentstring=#\ %s
+
+    " open NERDTree when vim starts up on opening a directory
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | wincmd w | endif
+
+    " close vim if the only window left open is NERDTree
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+augroup END
+" }}}
+
+" Backup {{{
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set writebackup
+" }}}
+
+" Command Line {{{
+set showcmd   " show the last command entered in the bottom line
+set wildmenu  " visual autocomplet for command menu
+" }}}
+
+" Commands Abbreviations {{{
+cabbrev E Explore
+" }}}
+
+" Plugin: Lightline {{{
 let g:lightline = {
   \ 'colorscheme': 'wombat',
   \ }
+" }}}
 
+" Plugin: NERDTree {{{
+
+" delete the buffer of file which is deleted through NERDTree
+let NERDTreeAutoDeleteBuffer = 1
+
+" make it looks better
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
+" filter out some files
+let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
+
+" set up window size
+let g:NERDTreeWinSize=25
+
+" }}}
+
+" Enable backspacing
+set backspace=indent,eol,start
+
+" Config the enhanced Python syntax
 let python_highlight_all=1
 
-set directory=.
+" Check the last line for the Modelines (commands used only in this file)
+set modelines=1
+" vim:foldmethod=marker:foldlevel=0
