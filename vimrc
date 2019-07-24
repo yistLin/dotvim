@@ -1,5 +1,5 @@
 " Author: Yist Lin
-" referred from https://dougblack.io/words/a-good-vimrc.html
+" based on https://dougblack.io/words/a-good-vimrc.html
 
 set nocompatible  " required in VIM
 filetype off      " required by Vundle
@@ -18,20 +18,18 @@ Plugin 'tpope/vim-commentary'
 Plugin 'scrooloose/nerdtree'
 Plugin 'godlygeek/tabular'
 Plugin 'lifepillar/vim-solarized8'
+Plugin 'mileszs/ack.vim'
 call vundle#end()
 " }}}
 
-" Encoding {{{
-set encoding=utf-8
-set fileencodings=utf8,big5,big5-hkscs,gbk,latin1
-" }}}
-
 " Spaces & Tabs {{{
-set smartindent
-set tabstop=4      " number of visual spaces a tab
-set shiftwidth=4   " Indents will have a width of 4
-set softtabstop=4  " number of spaces for a tab
+set autoindent     " copy indent when starting a new line
 set expandtab      " expand tab to spaces
+set smarttab       " insert 'tabstop' number of spaces pressing tab
+set tabstop=4      " number of visual spaces a tab
+set softtabstop=4  " number of spaces for a tab
+set shiftwidth=4   " while shifting, indents will have a width of 4
+set shiftround     " while shifting, round indentation to the nearest multiple of shiftwidth.
 " }}}
 
 " Colors {{{
@@ -46,24 +44,33 @@ set background=dark
 colorscheme solarized8_flat
 " }}}
 
-" UI {{{
-filetype on         " turn on filetype detection
-filetype indent on  " load indent/example.vim
-filetype plugin on  " load ftplugin/example.vim
+" User Interface {{{
 set number
 set numberwidth=6
-set wrap
-set breakindent
-set cursorline         " highlight current line
-set showmatch          " highlight matching [{()}]
-set laststatus=2       " display the status line
+set cursorline    " highlight current line
+set showmatch     " highlight matching [{()}]
+set laststatus=2  " display the status line
+set noshowmode    " no need to show mode while using lightline
+set noerrorbells  " disable beep on errors.
+set visualbell    " flash the screen instead of beeping on errors
+set showcmd       " show the last command entered in the bottom line
+set wildmenu      " visual autocomplet for command menu
+" }}}
+
+" Text Rendering {{{
+set fileencodings=utf8,big5,big5-hkscs,gbk,latin1
+filetype on            " turn on filetype detection
+filetype indent on     " load indent/example.vim
+filetype plugin on     " load ftplugin/example.vim
 set display+=lastline  " always display the last line
-set noshowmode         " not needed while using lightline
+set wrap
+set breakindent        " give indent to wrapped lines
 " }}}
 
 " Searching {{{
 set incsearch  " search as characters are entered
 set hlsearch   " highlight matches
+set smartcase  " switch to case-sensitive when search query contains an uppercase letter
 " }}}
 
 " Autogroups {{{
@@ -105,11 +112,6 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 " }}}
 
-" Command Line {{{
-set showcmd   " show the last command entered in the bottom line
-set wildmenu  " visual autocomplet for command menu
-" }}}
-
 " Remapping {{{
 " move vertically by visual line
 nnoremap j gj
@@ -130,6 +132,13 @@ map <C-l> <C-W>l
 " map the <Space> key to toggle a selected fold opened/closed.
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
+" }}}
+
+" Miscellaneous Options {{{
+set confirm         " display a confirmation dialog when closing an unsaved file
+set encoding=utf-8  " set characters encoding
+set autoread        " re-read files if it's written outside
+set backspace=indent,eol,start
 " }}}
 
 " Plugin: Lightline {{{
@@ -153,12 +162,13 @@ let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
 let g:NERDTreeWinSize=25
 " }}}
 
-" Enable backspacing
-set backspace=indent,eol,start
+" Plugin: ack.vim {{{
+cnoreabbrev ag Ack
+if executable('ag')
+  let g:ackprg='ag --nogroup --nocolor --column'
+endif
+" }}}
 
-" Config the enhanced Python syntax
-let python_highlight_all=1
-
-" Check the last line for the Modelines (commands used only in this file)
+" Check the last line for the Modelines
 set modelines=1
 " vim:foldmethod=marker:foldlevel=0
