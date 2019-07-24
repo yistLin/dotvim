@@ -7,8 +7,8 @@ The goal of this repo is to synchronize my configuration of VIM across all platf
 Cloning the repo, create soft links to these files.
 
 ~~~bash
-ln -s <the_path_to_this_repo>/vimrc $HOME/.vimrc
-ln -s <the_path_to_this_repo>/vim $HOME/.vim
+ln -s <path_to_this_repo>/vimrc  $HOME/.vimrc
+ln -s <path_to_this_repo>/dotvim $HOME/.vim
 ~~~
 
 Since I'm using [Vundle](https://github.com/VundleVim/Vundle.vim) as plug-in manager, don't forget to run `:PluginInstall` while starting VIM.
