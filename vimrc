@@ -19,6 +19,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'godlygeek/tabular'
 Plugin 'lifepillar/vim-solarized8'
 Plugin 'mileszs/ack.vim'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'roxma/nvim-yarp'
+Plugin 'roxma/vim-hug-neovim-rpc'
 call vundle#end()
 " }}}
 
@@ -167,6 +170,18 @@ cnoreabbrev ag Ack
 if executable('ag')
   let g:ackprg='ag --nogroup --nocolor --column'
 endif
+" }}}
+
+" Plugin: UltiSnips {{{
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" }}}
+
+" Plugin: deoplete.nvim {{{
+set pyxversion=3
+let g:python3_host_prog="/usr/local/bin/python3"
+let g:deoplete#enable_at_startup=1
 " }}}
 
 " Check the last line for the Modelines
