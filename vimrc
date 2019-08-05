@@ -50,7 +50,7 @@ colorscheme solarized8_flat
 " User Interface {{{
 set number
 set numberwidth=6
-set cursorline    " highlight current line
+" set cursorline    " highlight current line
 set showmatch     " highlight matching [{()}]
 set laststatus=2  " display the status line
 set noshowmode    " no need to show mode while using lightline
@@ -146,8 +146,31 @@ set backspace=indent,eol,start
 
 " Plugin: Lightline {{{
 let g:lightline = {
-  \ 'colorscheme': 'solarized',
-  \ }
+    \ 'colorscheme': 'solarized',
+    \ 'active': {
+    \     'left': [ [ 'mode', 'paste' ],
+    \               [ 'readonly', 'filename', 'modified' ] ],
+    \     'right': [ [ 'percent' ],
+    \                [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \ },
+    \ 'component_function': {
+    \     'fileformat': 'LightlineFileformat',
+    \     'filetype': 'LightlineFiletype',
+    \     'fileencoding': 'LightlineFileencoding',
+    \ },
+    \ }
+
+function! LightlineFileformat()
+    return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+    return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightlineFileencoding()
+    return winwidth(0) > 70 ? &fileencoding : ''
+endfunction
 " }}}
 
 " Plugin: NERDTree {{{
@@ -184,6 +207,4 @@ let g:python3_host_prog="/usr/local/bin/python3"
 let g:deoplete#enable_at_startup=1
 " }}}
 
-" Check the last line for the Modelines
-set modelines=1
 " vim:foldmethod=marker:foldlevel=0
