@@ -4,7 +4,14 @@ The goal of this repo is to synchronize my configuration of VIM across all platf
 
 ### Setup
 
-Cloning the repo, create soft links to these files.
+First, you need to clone Vundle.vim by initializing and updating the submodules.
+Run the following command in the root directory of the repo.
+
+~~~bash
+git submodule init && git submodule update
+~~~
+
+Then create soft links to these files.
 
 ~~~bash
 ln -s <path_to_this_repo>/vimrc  $HOME/.vimrc
