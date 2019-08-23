@@ -19,9 +19,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'godlygeek/tabular'
 Plugin 'lifepillar/vim-solarized8'
 Plugin 'mileszs/ack.vim'
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'roxma/nvim-yarp'
-Plugin 'roxma/vim-hug-neovim-rpc'
 call vundle#end()
 " }}}
 
@@ -68,6 +65,7 @@ filetype plugin on     " load ftplugin/example.vim
 set display+=lastline  " always display the last line
 set wrap
 set breakindent        " give indent to wrapped lines
+set foldmethod=marker
 " }}}
 
 " Searching {{{
@@ -200,11 +198,3 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " }}}
-
-" Plugin: deoplete.nvim {{{
-set pyxversion=3
-let g:python3_host_prog="/usr/local/bin/python3"
-let g:deoplete#enable_at_startup=1
-" }}}
-
-" vim:foldmethod=marker:foldlevel=0

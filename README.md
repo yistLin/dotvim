@@ -11,7 +11,13 @@ Run the following command in the root directory of the repo.
 git submodule init && git submodule update
 ~~~
 
-Then create soft links to these files.
+Then go into `dotvim/bundle/Vundle.vim` and checkout to master branch so that Vundle can handle its update by itself.
+
+~~~bash
+cd dotvim/bundle/Vundle.vim && git checkout master
+~~~
+
+And create soft links to these files.
 
 ~~~bash
 ln -s <path_to_this_repo>/vimrc  $HOME/.vimrc
