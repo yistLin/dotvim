@@ -1,25 +1,47 @@
 " Author: Yist Lin
-" based on https://dougblack.io/words/a-good-vimrc.html
 
-set nocompatible  " required in VIM
-filetype off      " required by Vundle
+if has('vim')
+    set nocompatible  " required in VIM
+endif
 
-" Vundle {{{
-set rtp+=~/.vim/bundle/Vundle.vim  " runtime path to include Vundle
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'      " let Vundle manage Vundle (required)
-Plugin 'itchyny/lightline.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'morhetz/gruvbox'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-commentary'
-Plugin 'scrooloose/nerdtree'
-Plugin 'godlygeek/tabular'
-Plugin 'lifepillar/vim-solarized8'
-Plugin 'mileszs/ack.vim'
-call vundle#end()
+" vim-plug {{{
+if has('nvim')
+    call plug#begin('~/.local/share/nvim/plugged')
+else
+    call plug#begin('~/.vim/plugged')
+endif
+
+" A light and configurable statusline/tabline plugin for Vim
+Plug 'itchyny/lightline.vim'
+
+" vim-snipmate default snippets (Previously snipmate-snippets)
+Plug 'honza/vim-snippets'
+
+" Retro groove color scheme for Vim
+Plug 'morhetz/gruvbox'
+
+" True Sublime Text style multiple selections for Vim
+Plug 'terryma/vim-multiple-cursors'
+
+" commentary.vim: comment stuff out
+Plug 'tpope/vim-commentary'
+
+" A tree explorer plugin for vim
+Plug 'scrooloose/nerdtree'
+
+" Optimized Solarized colorschemes. Best served with true-color terminals!
+Plug 'lifepillar/vim-solarized8'
+
+" Dark powered asynchronous completion framework for neovim/Vim8
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+call plug#end()
 " }}}
 
 " Spaces & Tabs {{{
@@ -37,11 +59,11 @@ syntax enable
 if (has("termguicolors"))
     set termguicolors
     " set Vim-specific sequences for RGB colors
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 set background=dark
-colorscheme solarized8_flat
+colorscheme gruvbox
 " }}}
 
 " User Interface {{{
@@ -186,15 +208,6 @@ let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
 let g:NERDTreeWinSize=25
 " }}}
 
-" Plugin: ack.vim {{{
-cnoreabbrev ag Ack
-if executable('ag')
-  let g:ackprg='ag --nogroup --nocolor --column'
-endif
-" }}}
-
-" Plugin: UltiSnips {{{
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" Plugin: deoplete.nvim {{{
+let g:deoplete#enable_at_startup = 1
 " }}}
