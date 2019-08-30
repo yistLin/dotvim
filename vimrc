@@ -41,6 +41,12 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+" A solid language pack for Vim 
+Plug 'sheerun/vim-polyglot'
+
+" deoplete.nvim source for Python
+Plug 'deoplete-plugins/deoplete-jedi'
+
 call plug#end()
 " }}}
 
@@ -63,7 +69,7 @@ if (has("termguicolors"))
     " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 set background=dark
-colorscheme gruvbox
+colorscheme solarized8_flat
 " }}}
 
 " User Interface {{{
@@ -102,9 +108,6 @@ augroup configgroup
     " clean out all previous commands
     autocmd!
 
-    " load .vimrc source when saved
-    autocmd BufWritePost .vimrc source $MYVIMRC
-
     " trim trailing spaces
     autocmd FileType c,cpp,python,javascript,html,tex autocmd BufWritePre <buffer> %s/\s\+$//e
 
@@ -123,6 +126,9 @@ augroup configgroup
 
     " close vim if the only window left open is NERDTree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+    " close the auto-completion windows when it is done
+    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 augroup END
 " }}}
