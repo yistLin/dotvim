@@ -47,7 +47,63 @@ Plug 'sheerun/vim-polyglot'
 " deoplete.nvim source for Python
 Plug 'deoplete-plugins/deoplete-jedi'
 
+" Base16 for Vim
+Plug 'chriskempson/base16-vim'
+
+" Light & Dark color schemes inspired by Google Material's Design
+Plug 'NLKNguyen/papercolor-theme'
+
+" Vim plugin, insert or delete brackets, parens, quotes in pair
+Plug 'jiangmiao/auto-pairs'
+
 call plug#end()
+" }}}
+
+" Plugin: Lightline {{{
+let g:lightline = {
+    \ 'active': {
+    \     'left': [ [ 'mode', 'paste' ],
+    \               [ 'readonly', 'filename', 'modified' ] ],
+    \     'right': [ [ 'percent' ],
+    \                [ 'fileformat', 'fileencoding', 'filetype' ] ]
+    \ },
+    \ 'component_function': {
+    \     'fileformat': 'LightlineFileformat',
+    \     'filetype': 'LightlineFiletype',
+    \     'fileencoding': 'LightlineFileencoding',
+    \ },
+    \ }
+
+function! LightlineFileformat()
+    return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+    return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightlineFileencoding()
+    return winwidth(0) > 70 ? &fileencoding : ''
+endfunction
+" }}}
+
+" Plugin: NERDTree {{{
+" delete the buffer of file which is deleted through NERDTree
+let NERDTreeAutoDeleteBuffer = 1
+
+" make it looks better
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
+" filter out some files
+let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
+
+" set up window size
+let g:NERDTreeWinSize=25
+" }}}
+
+" Plugin: deoplete.nvim {{{
+let g:deoplete#enable_at_startup = 1
 " }}}
 
 " Spaces & Tabs {{{
@@ -62,14 +118,34 @@ set shiftround     " while shifting, round indentation to the nearest multiple o
 
 " Colors {{{
 syntax enable
-if (has("termguicolors"))
-    set termguicolors
-    " set Vim-specific sequences for RGB colors
-    " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-set background=dark
-colorscheme solarized8_flat
+
+" Detect whether shell is through Mosh or not
+function! s:is_mosh()
+    let output = system("is-mosh -v")
+    if v:shell_error
+        return 0
+    endif
+    return !empty(l:output)
+endfunction
+
+" Turn off 24-bits color when shell is through Mosh
+function s:auto_termguicolors()
+    if !(has("termguicolors"))
+        return
+    endif
+    if (&term == 'xterm-256color' || &term == 'nvim') && !s:is_mosh()
+        set termguicolors
+        colorscheme solarized8_flat
+        let g:lightline.colorscheme = "solarized"
+    else
+        set notermguicolors
+        set background=light
+        colorscheme PaperColor
+        let g:lightline.colorscheme = "PaperColor"
+    endif
+endfunction
+
+call s:auto_termguicolors()
 " }}}
 
 " User Interface {{{
@@ -168,52 +244,4 @@ set confirm         " display a confirmation dialog when closing an unsaved file
 set encoding=utf-8  " set characters encoding
 set autoread        " re-read files if it's written outside
 set backspace=indent,eol,start
-" }}}
-
-" Plugin: Lightline {{{
-let g:lightline = {
-    \ 'colorscheme': 'solarized',
-    \ 'active': {
-    \     'left': [ [ 'mode', 'paste' ],
-    \               [ 'readonly', 'filename', 'modified' ] ],
-    \     'right': [ [ 'percent' ],
-    \                [ 'fileformat', 'fileencoding', 'filetype' ] ]
-    \ },
-    \ 'component_function': {
-    \     'fileformat': 'LightlineFileformat',
-    \     'filetype': 'LightlineFiletype',
-    \     'fileencoding': 'LightlineFileencoding',
-    \ },
-    \ }
-
-function! LightlineFileformat()
-    return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-    return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-
-function! LightlineFileencoding()
-    return winwidth(0) > 70 ? &fileencoding : ''
-endfunction
-" }}}
-
-" Plugin: NERDTree {{{
-" delete the buffer of file which is deleted through NERDTree
-let NERDTreeAutoDeleteBuffer = 1
-
-" make it looks better
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
-" filter out some files
-let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
-
-" set up window size
-let g:NERDTreeWinSize=25
-" }}}
-
-" Plugin: deoplete.nvim {{{
-let g:deoplete#enable_at_startup = 1
 " }}}
