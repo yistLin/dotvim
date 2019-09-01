@@ -26,9 +26,6 @@ Plug 'terryma/vim-multiple-cursors'
 " commentary.vim: comment stuff out
 Plug 'tpope/vim-commentary'
 
-" A tree explorer plugin for vim
-Plug 'scrooloose/nerdtree'
-
 " Optimized Solarized colorschemes. Best served with true-color terminals!
 Plug 'lifepillar/vim-solarized8'
 
@@ -52,9 +49,6 @@ Plug 'chriskempson/base16-vim'
 
 " Light & Dark color schemes inspired by Google Material's Design
 Plug 'NLKNguyen/papercolor-theme'
-
-" Vim plugin, insert or delete brackets, parens, quotes in pair
-Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 " }}}
@@ -87,23 +81,15 @@ function! LightlineFileencoding()
 endfunction
 " }}}
 
-" Plugin: NERDTree {{{
-" delete the buffer of file which is deleted through NERDTree
-let NERDTreeAutoDeleteBuffer = 1
-
-" make it looks better
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
-" filter out some files
-let NERDTreeIgnore = ['\.pyc$', '\.swp', '\.swo', '\.vscode', '__pycache__']
-
-" set up window size
-let g:NERDTreeWinSize=25
-" }}}
-
 " Plugin: deoplete.nvim {{{
 let g:deoplete#enable_at_startup = 1
+" }}}
+
+" Plugin: netrw {{{
+let g:netrw_banner = 0
+let g:netrw_preview = 1
+let g:netrw_winsize = 30
+let g:netrw_liststyle = 3
 " }}}
 
 " Spaces & Tabs {{{
@@ -151,14 +137,14 @@ call s:auto_termguicolors()
 " User Interface {{{
 set number
 set numberwidth=6
-" set cursorline    " highlight current line
 set showmatch     " highlight matching [{()}]
 set laststatus=2  " display the status line
 set noshowmode    " no need to show mode while using lightline
 set noerrorbells  " disable beep on errors.
 set visualbell    " flash the screen instead of beeping on errors
 set showcmd       " show the last command entered in the bottom line
-set wildmenu      " visual autocomplet for command menu
+set wildmenu      " visual autocomplete for command menu
+set wildignore=*.swp,*.bak,*.pyc,*.class
 " }}}
 
 " Text Rendering {{{
@@ -196,13 +182,6 @@ augroup configgroup
       \   exe "normal! g`\"" |
       \ endif
 
-    " open NERDTree when vim starts up on opening a directory
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | wincmd w | endif
-
-    " close vim if the only window left open is NERDTree
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
     " close the auto-completion windows when it is done
     autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
@@ -218,15 +197,25 @@ set writebackup
 " }}}
 
 " Remapping {{{
+let mapleader=","
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>e :Explore<CR>
+
+" recording is useless to me currently
+nnoremap q <nop>
+
 " move vertically by visual line
 nnoremap j gj
 nnoremap k gk
 
-" jump to beginning/end of line
-nnoremap B ^
-nnoremap E $
-nnoremap $ <nop>
-nnoremap ^ <nop>
+" create and move between tabs
+nnoremap tn :tabnew<CR>
+nnoremap th :tabprev<CR>
+nnoremap tl :tabnext<CR>
+nnoremap to :tabonly<CR>
+nnoremap td :tabclose<CR>
+nnoremap tt :<C-U>execute "normal! " . v:count . "gt"<CR>
 
 " move between windows
 map <C-j> <C-W>j
