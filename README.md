@@ -18,8 +18,8 @@ ln -s <path_to_this_repo>/dotvim $HOME/.vim
 #### Neovim
 
 ~~~bash
-ln -s <path_to_this_repo>/vimrc    $HOME/.config/nvim/init.vim
 ln -s <path_to_this_repo>/dotvim/* $HOME/.config/nvim/
+ln -s <path_to_this_repo>/vimrc    $HOME/.config/nvim/init.vim
 ~~~
 
 Since I'm using **vim-plug** as plug-in manager, don't forget to run `:PlugInstall` while starting VIM/NVIM.
