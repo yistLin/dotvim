@@ -14,14 +14,14 @@ endif
 " A light and configurable statusline/tabline plugin for Vim
 Plug 'itchyny/lightline.vim'
 
+" UltiSnips - The ultimate snippet solution for Vim. Send pull requests to SirVer/ultisnips!
+Plug 'SirVer/ultisnips'
+
 " vim-snipmate default snippets (Previously snipmate-snippets)
 Plug 'honza/vim-snippets'
 
 " Retro groove color scheme for Vim
 Plug 'morhetz/gruvbox'
-
-" True Sublime Text style multiple selections for Vim
-Plug 'terryma/vim-multiple-cursors'
 
 " commentary.vim: comment stuff out
 Plug 'tpope/vim-commentary'
@@ -96,12 +96,19 @@ let g:netrw_liststyle = 3
 " }}}
 
 " Plugin: vimtex {{{
+let g:polyglot_disabled = [ "latex" ]
 if has('nvim')
     let g:vimtex_compiler_progname = 'nvr'
 endif
 call deoplete#custom#var('omni', 'input_patterns', {
     \ 'tex': g:vimtex#re#deoplete
     \ })
+" }}}
+
+" Plugin: ultisnips {{{
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " }}}
 
 " Spaces & Tabs {{{
