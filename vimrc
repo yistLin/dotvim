@@ -50,6 +50,9 @@ Plug 'chriskempson/base16-vim'
 " Light & Dark color schemes inspired by Google Material's Design
 Plug 'NLKNguyen/papercolor-theme'
 
+" A modern vim plugin for editing LaTeX files.
+Plug 'lervag/vimtex'
+
 call plug#end()
 " }}}
 
@@ -92,6 +95,15 @@ let g:netrw_winsize = 30
 let g:netrw_liststyle = 3
 " }}}
 
+" Plugin: vimtex {{{
+if has('nvim')
+    let g:vimtex_compiler_progname = 'nvr'
+endif
+call deoplete#custom#var('omni', 'input_patterns', {
+    \ 'tex': g:vimtex#re#deoplete
+    \ })
+" }}}
+
 " Spaces & Tabs {{{
 set autoindent     " copy indent when starting a new line
 set expandtab      " expand tab to spaces
@@ -121,6 +133,7 @@ function s:auto_termguicolors()
     endif
     if (&term == 'xterm-256color' || &term == 'nvim') && !s:is_mosh()
         set termguicolors
+        set background=light
         colorscheme solarized8_flat
         let g:lightline.colorscheme = "solarized"
     else
@@ -201,6 +214,7 @@ let mapleader=","
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>e :Explore<CR>
+nnoremap <leader>r :source $MYVIMRC<CR>
 
 " recording is useless to me currently
 nnoremap q <nop>
