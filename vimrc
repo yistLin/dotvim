@@ -53,6 +53,15 @@ Plug 'NLKNguyen/papercolor-theme'
 " A modern vim plugin for editing LaTeX files.
 Plug 'lervag/vimtex'
 
+" An arctic, north-bluish clean and elegant Vim theme
+Plug 'arcticicestudio/nord-vim'
+
+" A dark theme for Vim
+Plug 'dracula/vim'
+
+" lightline.vim colorschemes for all available base16 themes
+Plug 'mike-hearn/base16-vim-lightline'
+
 call plug#end()
 " }}}
 
@@ -140,15 +149,12 @@ function s:auto_termguicolors()
     endif
     if (&term == 'xterm-256color' || &term == 'nvim') && !s:is_mosh()
         set termguicolors
-        set background=light
-        colorscheme solarized8_flat
-        let g:lightline.colorscheme = "solarized"
     else
         set notermguicolors
-        set background=light
-        colorscheme PaperColor
-        let g:lightline.colorscheme = "PaperColor"
     endif
+    set background=dark
+    colorscheme solarized8_flat
+    let g:lightline.colorscheme = "solarized"
 endfunction
 
 call s:auto_termguicolors()
@@ -223,12 +229,17 @@ nnoremap <leader>q :q<CR>
 nnoremap <leader>e :Explore<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 
-" recording is useless to me currently
-nnoremap q <nop>
-
 " move vertically by visual line
 nnoremap j gj
 nnoremap k gk
+
+" move half page up/down with j, k
+nnoremap <C-j> <C-d>
+nnoremap <C-k> <C-u>
+
+" move one line up/down in insert mode
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
 
 " create and move between tabs
 nnoremap tn :tabnew<CR>
@@ -237,12 +248,6 @@ nnoremap tl :tabnext<CR>
 nnoremap to :tabonly<CR>
 nnoremap td :tabclose<CR>
 nnoremap tt :<C-U>execute "normal! " . v:count . "gt"<CR>
-
-" move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 " map the <Space> key to toggle a selected fold opened/closed.
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>

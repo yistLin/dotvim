@@ -1,4 +1,5 @@
 colorscheme dracula
+let g:lightline.colorscheme = "powerline"
 
 set tabstop=2
 set shiftwidth=2
