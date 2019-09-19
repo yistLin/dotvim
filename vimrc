@@ -259,4 +259,5 @@ set confirm         " display a confirmation dialog when closing an unsaved file
 set encoding=utf-8  " set characters encoding
 set autoread        " re-read files if it's written outside
 set backspace=indent,eol,start
+let g:tex_flavor = "latex"  " see .tex file as latex instead of plaintex
 " }}}
