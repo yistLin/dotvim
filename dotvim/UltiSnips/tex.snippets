@@ -1,5 +1,39 @@
-snippet "\be?g?i?n?" "\begin{...} ... \end{...}" br
-\begin{${1:env}}
+priority 1
+
+snippet "\\doc(ument)?(class)?" "document class" br
+\documentclass[${1:options}]{${2:class}}
+${0:${VISUAL}}
+endsnippet
+
+snippet "begi?n?" "begin{} / end{}" br
+\begin{${1:whatever}}
 	${0:${VISUAL}}
 \end{$1}
+endsnippet
+
+snippet "docu?m?e?n?t?" "document environment" br
+\begin{document}
+${0:${VISUAL}}
+\end{document}
+endsnippet
+
+snippet "(it)|(textit?)" "italic font" r
+\textit{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "(bf)|(textbf?)" "bold font" r
+\textbf{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "(tt)|(texttt?)" "typewriter font" r
+\texttt{${1:${VISUAL}}}$0
+endsnippet
+
+priority 0
+
+snippet "begi?n?( (\S+))?" "begin{something} / end{something}" br
+\begin{${1:`!p
+snip.rv = match.group(2) if match.group(1) is not None else "something"`}}
+	${2:${VISUAL}}
+\end{$1}$0
 endsnippet

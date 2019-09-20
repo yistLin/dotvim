@@ -14,12 +14,6 @@ endif
 " A light and configurable statusline/tabline plugin for Vim
 Plug 'itchyny/lightline.vim'
 
-" UltiSnips - The ultimate snippet solution for Vim. Send pull requests to SirVer/ultisnips!
-Plug 'SirVer/ultisnips'
-
-" vim-snipmate default snippets (Previously snipmate-snippets)
-Plug 'honza/vim-snippets'
-
 " Retro groove color scheme for Vim
 Plug 'morhetz/gruvbox'
 
@@ -37,6 +31,15 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+let g:deoplete#enable_at_startup = 1
+
+" neo-snippet plugin
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
+
+" UltiSnips - The ultimate snippet solution for Vim. Send pull requests to SirVer/ultisnips!
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " A solid language pack for Vim 
 Plug 'sheerun/vim-polyglot'
@@ -61,6 +64,9 @@ Plug 'dracula/vim'
 
 " lightline.vim colorschemes for all available base16 themes
 Plug 'mike-hearn/base16-vim-lightline'
+
+" A vim plugin to display the indentation levels with thin vertical lines
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 " }}}
@@ -93,10 +99,6 @@ function! LightlineFileencoding()
 endfunction
 " }}}
 
-" Plugin: deoplete.nvim {{{
-let g:deoplete#enable_at_startup = 1
-" }}}
-
 " Plugin: netrw {{{
 let g:netrw_banner = 0
 let g:netrw_preview = 1
@@ -112,12 +114,36 @@ endif
 call deoplete#custom#var('omni', 'input_patterns', {
     \ 'tex': g:vimtex#re#deoplete
     \ })
+let g:vimtex_compiler_latexmk = {
+    \ 'backend' : 'nvim', 
+    \ 'background' : 1,
+    \ 'build_dir' : '',
+    \ 'callback' : 1,
+    \ 'continuous' : 1,
+    \ 'executable' : 'latexmk',
+    \ 'hooks' : [],
+    \ 'options' : [
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-latexoption="-shell-escape"',
+    \   '-interaction=nonstopmode',
+    \ ],
+    \}
 " }}}
 
-" Plugin: ultisnips {{{
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" Plugin: indentLine {{{
+let g:indentLine_char = '┊'
+" }}}
+
+" Plugin: neosnippet.vim {{{
+let g:neosnippet#snippets_directory = "$HOME/.config/nvim/snips"
+" }}}
+
+" Plugin: UltiSnips {{{
+let g:UltiSnipsExpandTrigger="<C-k>"
+let g:UltiSnipsJumpForwardTrigger="<C-k>"
+let g:UltiSnipsJumpBackwardTrigger="<C-l>"
 " }}}
 
 " Spaces & Tabs {{{
@@ -181,6 +207,7 @@ filetype plugin on     " load ftplugin/example.vim
 set display+=lastline  " always display the last line
 set wrap
 set breakindent        " give indent to wrapped lines
+set showbreak=\ 
 set foldmethod=marker
 " }}}
 
@@ -237,14 +264,10 @@ nnoremap k gk
 nnoremap <C-j> <C-d>
 nnoremap <C-k> <C-u>
 
-" move one line up/down in insert mode
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-
 " create and move between tabs
-nnoremap tn :tabnew<CR>
-nnoremap th :tabprev<CR>
-nnoremap tl :tabnext<CR>
+nnoremap tc :tabnew<CR>:Explore<CR>
+nnoremap tp :tabprev<CR>
+nnoremap tn :tabnext<CR>
 nnoremap to :tabonly<CR>
 nnoremap td :tabclose<CR>
 nnoremap tt :<C-U>execute "normal! " . v:count . "gt"<CR>
@@ -252,6 +275,13 @@ nnoremap tt :<C-U>execute "normal! " . v:count . "gt"<CR>
 " map the <Space> key to toggle a selected fold opened/closed.
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
+
+" neosnippet key-mappings
+" imap <C-k> <Plug>(neosnippet_expand_or_jump)
+" smap <C-k> <Plug>(neosnippet_expand_or_jump)
+" imap <C-l> <Plug>(neosnippet_jump)
+" smap <C-l> <Plug>(neosnippet_jump)
+" xmap <C-k> <Plug>(neosnippet_expand_target)
 " }}}
 
 " Miscellaneous Options {{{
@@ -260,4 +290,5 @@ set encoding=utf-8  " set characters encoding
 set autoread        " re-read files if it's written outside
 set backspace=indent,eol,start
 let g:tex_flavor = "latex"  " see .tex file as latex instead of plaintex
+let g:tex_conceal = ''
 " }}}
