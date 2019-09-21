@@ -1,20 +1,23 @@
 priority 1
 
 global !p
-def delete_option_bracket(options):
+def delete_option_bracket():
+	options = snip.tabstops[2].current_text
 	if len(options) == 0 :
-		snip.buffer[snip.line] = "\\usepackage{" + snip.tabstops[1].current_text + "}"
-		snip.cursor.set(snip.line, 13+len(snip.tabstops[1].current_text))
+		prefix = re.sub(r"(.*)\[\].*", r"\1", snip.buffer[snip.line])
+		kept = snip.tabstops[1].current_text
+		snip.buffer[snip.line] = prefix + "{" + kept + "}"
+		snip.cursor.set(snip.line, len(prefix)+2+len(kept))
 endglobal
 
-snippet "\\doc(ument)?(class)?" "document class" br
-\documentclass[${1:options}]{${2:class}}
-${0:${VISUAL}}
+post_jump "if snip.tabstop == 0 : delete_option_bracket()"
+snippet "\\doc?u?(ment)?(class)?" "document class" br
+\documentclass[${2}]{${1:class}}$0
 endsnippet
 
-post_jump "if snip.tabstop == 0 : delete_option_bracket(snip.tabstops[2].current_text)"
+post_jump "if snip.tabstop == 0 : delete_option_bracket()"
 snippet "\\?usep?(ackage)?" "use package" br
-\usepackage[${2}]{${1}}$0
+\usepackage[${2}]{${1:package}}$0
 endsnippet
 
 snippet "begi?n?" "begin{} / end{}" br
