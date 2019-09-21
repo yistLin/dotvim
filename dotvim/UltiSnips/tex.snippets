@@ -1,8 +1,20 @@
 priority 1
 
+global !p
+def delete_option_bracket(options):
+	if len(options) == 0 :
+		snip.buffer[snip.line] = "\\usepackage{" + snip.tabstops[1].current_text + "}"
+		snip.cursor.set(snip.line, 13+len(snip.tabstops[1].current_text))
+endglobal
+
 snippet "\\doc(ument)?(class)?" "document class" br
 \documentclass[${1:options}]{${2:class}}
 ${0:${VISUAL}}
+endsnippet
+
+post_jump "if snip.tabstop == 0 : delete_option_bracket(snip.tabstops[2].current_text)"
+snippet "\\?usep?(ackage)?" "use package" br
+\usepackage[${2}]{${1}}$0
 endsnippet
 
 snippet "begi?n?" "begin{} / end{}" br
@@ -27,6 +39,16 @@ endsnippet
 
 snippet "(tt)|(texttt?)" "typewriter font" r
 \texttt{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "\\?sqr?t?" "\sqrt{}" r
+\sqrt{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "\\?left?([\(\[\{])" "\left \right" r
+\left`!p matched = match.group(1)
+snip.rv = matched if matched != "{" else "\{"` ${1} \right`!p
+snip.rv = [")", "]", "\}"][["(", "[", "{"].index(matched)]`$0
 endsnippet
 
 priority 0
