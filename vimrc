@@ -141,9 +141,9 @@ let g:neosnippet#snippets_directory = "$HOME/.config/nvim/snips"
 " }}}
 
 " Plugin: UltiSnips {{{
-let g:UltiSnipsExpandTrigger="<C-k>"
-let g:UltiSnipsJumpForwardTrigger="<C-k>"
-let g:UltiSnipsJumpBackwardTrigger="<C-l>"
+let g:UltiSnipsExpandTrigger="<TAB>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 " }}}
 
 " Spaces & Tabs {{{
@@ -265,23 +265,18 @@ nnoremap <C-j> <C-d>
 nnoremap <C-k> <C-u>
 
 " create and move between tabs
-nnoremap tc :tabnew<CR>:Explore<CR>
 nnoremap tp :tabprev<CR>
 nnoremap tn :tabnext<CR>
 nnoremap to :tabonly<CR>
-nnoremap td :tabclose<CR>
-nnoremap tt :<C-U>execute "normal! " . v:count . "gt"<CR>
+nnoremap <expr> tt (v:count == 0 ? ":tabnew<CR>" : ":<C-U>execute v:count 'tabnext'<CR>")
+nnoremap <expr> tq (v:count == 0 ? ":tabclose<CR>" : ":<C-U>execute v:count 'tabclose'<CR>")
 
 " map the <Space> key to toggle a selected fold opened/closed.
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
 
-" neosnippet key-mappings
-" imap <C-k> <Plug>(neosnippet_expand_or_jump)
-" smap <C-k> <Plug>(neosnippet_expand_or_jump)
-" imap <C-l> <Plug>(neosnippet_jump)
-" smap <C-l> <Plug>(neosnippet_jump)
-" xmap <C-k> <Plug>(neosnippet_expand_target)
+" search for visually selected text
+vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>
 " }}}
 
 " Miscellaneous Options {{{
