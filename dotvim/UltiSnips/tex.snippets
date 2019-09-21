@@ -44,6 +44,42 @@ snippet "(tt)|(texttt?)" "typewriter font" r
 \texttt{${1:${VISUAL}}}$0
 endsnippet
 
+snippet $ "inline equation"
+\$ ${1:${VISUAL}} \$$0
+endsnippet
+
+snippet $$ "unnumbered displayed equation"
+\$\$ ${1:${VISUAL}} \$\$$0
+endsnippet
+
+snippet \[ "unnumbered displayed equation"
+\[ ${1:${VISUAL}} \]$0
+endsnippet
+
+snippet "\\?m(ath)?bf" "bold (math)" r
+\mathbf{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "\\?m(ath)?it" "italic (math)" r
+\mathit{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "\\?m(ath)?tt" "typewriter (math)" r
+\mathtt{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "\\?m(ath)?ca?l?" "Calligraphic (math)" r
+\mathcal{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "\\?m(ath)?fr?a?k?" "Fraktur (math)" r
+\mathfrak{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "\\?m(ath)?bb" "Blackboard (math)" r
+\mathbb{${1:${VISUAL}}}$0
+endsnippet
+
 snippet "\\?sqr?t?" "\sqrt{}" r
 \sqrt{${1:${VISUAL}}}$0
 endsnippet
@@ -52,6 +88,15 @@ snippet "\\?left?([\(\[\{])" "\left \right" r
 \left`!p matched = match.group(1)
 snip.rv = matched if matched != "{" else "\{"` ${1} \right`!p
 snip.rv = [")", "]", "\}"][["(", "[", "{"].index(matched)]`$0
+endsnippet
+
+snippet "\\?lang?l?e?" "angle brackets" r
+\langle ${1:${VISUAL}} \rangle$0
+endsnippet
+
+snippet "(\S*)//" "fraction" r
+\frac{${1:`!p matched = match.group(1)
+snip.rv = matched if matched != None else ""`}}{${2}}$0
 endsnippet
 
 priority 0

@@ -142,8 +142,8 @@ let g:neosnippet#snippets_directory = "$HOME/.config/nvim/snips"
 
 " Plugin: UltiSnips {{{
 let g:UltiSnipsExpandTrigger="<TAB>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
-let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+let g:UltiSnipsJumpForwardTrigger="<C-k>"
+let g:UltiSnipsJumpBackwardTrigger="<C-l>"
 " }}}
 
 " Spaces & Tabs {{{
