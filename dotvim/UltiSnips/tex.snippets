@@ -1,23 +1,49 @@
 priority 1
 
-global !p
-def delete_option_bracket():
-	options = snip.tabstops[2].current_text
-	if len(options) == 0 :
-		prefix = re.sub(r"(.*)\[\].*", r"\1", snip.buffer[snip.line])
-		kept = snip.tabstops[1].current_text
-		snip.buffer[snip.line] = prefix + "{" + kept + "}"
-		snip.cursor.set(snip.line, len(prefix)+2+len(kept))
-endglobal
-
-post_jump "if snip.tabstop == 0 : delete_option_bracket()"
-snippet "\\doc?u?(ment)?(class)?" "document class" br
-\documentclass[${2}]{${1:class}}$0
+snippet it "italic font" w
+\textit{${1:${VISUAL}}}$0
 endsnippet
 
-post_jump "if snip.tabstop == 0 : delete_option_bracket()"
+snippet bf "bold font" w
+\textbf{${1:${VISUAL}}}$0
+endsnippet
+
+snippet tt "typewriter font" w
+\texttt{${1:${VISUAL}}}$0
+endsnippet
+
+snippet \it "individual item" b
+\item $0
+endsnippet
+
+snippet "\\?incl?(ude)?(graphics)?" "insert graphic" wr
+\includegraphics[width=${2:${3}\textwidth}]{${1:path}}$0
+endsnippet
+
+# title <<<
+
+snippet "\\?tit?l?e?" "title" br
+\title{${1}}$0
+endsnippet
+
+snippet "\\?aut?h?o?r?" "author" br
+\author{${1}}$0
+endsnippet
+
+snippet "\\?dat?e?" "date" br
+\date{${1}}$0
+endsnippet
+
+# >>>
+
+# environment <<<
+
+snippet "\\doc?u?(ment)?(class)?" "document class" br
+\documentclass`!p snip.rv = "[" if t[2] else ""`${2}`!p snip.rv = "]" if t[2] else ""`{${1:class}}$0
+endsnippet
+
 snippet "\\?usep?(ackage)?" "use package" br
-\usepackage[${2}]{${1:package}}$0
+\usepackage`!p snip.rv = "[" if t[2] else ""`${2}`!p snip.rv = "]" if t[2] else ""`{${1:package}}$0
 endsnippet
 
 snippet "begi?n?" "begin{} / end{}" br
@@ -32,28 +58,31 @@ ${0:${VISUAL}}
 \end{document}
 endsnippet
 
-snippet "(it)|(textit?)" "italic font" r
-\textit{${1:${VISUAL}}}$0
+priority 0
+
+snippet "begi?n?( (\S+))?" "begin{something} / end{something}" br
+\begin{${1:`!p
+snip.rv = match.group(2) if match.group(1) is not None else "something"`}}
+	${2:${VISUAL}}
+\end{$1}$0
 endsnippet
 
-snippet "(bf)|(textbf?)" "bold font" r
-\textbf{${1:${VISUAL}}}$0
-endsnippet
+priority 1
 
-snippet "(tt)|(texttt?)" "typewriter font" r
-\texttt{${1:${VISUAL}}}$0
-endsnippet
+# >>>
 
-snippet $ "inline equation"
+# math <<<
+
+snippet $ "inline equation" w
 \$ ${1:${VISUAL}} \$$0
 endsnippet
 
-snippet $$ "unnumbered displayed equation"
-\$\$ ${1:${VISUAL}} \$\$$0
+snippet $$ "unnumbered displayed equation" b
+\$\$ ${0:${VISUAL}} \$\$
 endsnippet
 
-snippet \[ "unnumbered displayed equation"
-\[ ${1:${VISUAL}} \]$0
+snippet \[ "unnumbered displayed equation" b
+\[ ${0:${VISUAL}} \]
 endsnippet
 
 snippet "\\?m(ath)?bf" "bold (math)" r
@@ -99,11 +128,6 @@ snippet "(\S*)//" "fraction" r
 snip.rv = matched if matched != None else ""`}}{${2}}$0
 endsnippet
 
-priority 0
+# >>>
 
-snippet "begi?n?( (\S+))?" "begin{something} / end{something}" br
-\begin{${1:`!p
-snip.rv = match.group(2) if match.group(1) is not None else "something"`}}
-	${2:${VISUAL}}
-\end{$1}$0
-endsnippet
+# vim:foldlevel=0:foldmethod=marker:foldmarker=<<<,>>>
