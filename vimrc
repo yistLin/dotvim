@@ -47,9 +47,6 @@ Plug 'sheerun/vim-polyglot'
 " deoplete.nvim source for Python
 Plug 'deoplete-plugins/deoplete-jedi'
 
-" Base16 for Vim
-Plug 'chriskempson/base16-vim'
-
 " Light & Dark color schemes inspired by Google Material's Design
 Plug 'NLKNguyen/papercolor-theme'
 
@@ -61,9 +58,6 @@ Plug 'arcticicestudio/nord-vim'
 
 " A dark theme for Vim
 Plug 'dracula/vim'
-
-" lightline.vim colorschemes for all available base16 themes
-Plug 'mike-hearn/base16-vim-lightline'
 
 " A vim plugin to display the indentation levels with thin vertical lines
 Plug 'Yggdroot/indentLine'
