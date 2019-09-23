@@ -280,6 +280,10 @@ nnoremap <leader>d :Gdiffsplit<CR>
 " toggle paste mode
 nnoremap <leader>p :set invpaste paste?<CR>
 
+" comment quickly with vim-commentary
+nnoremap <leader>c :Commentary<CR>
+vnoremap <leader>c :Commentary<CR>
+
 " toggle folding by pressing space bar twice
 nnoremap <silent><Space><Space> za
 
@@ -299,10 +303,6 @@ nnoremap tn :tabnext<CR>
 nnoremap to :tabonly<CR>
 nnoremap <expr> tt (v:count == 0 ? ":tabnew<CR>"   : ":<C-U>execute v:count 'tabnext'<CR>")
 nnoremap <expr> tq (v:count == 0 ? ":tabclose<CR>" : ":<C-U>execute v:count 'tabclose'<CR>")
-
-" comment quickly by Ctrl + / with vim-commentary
-nnoremap <C-_> :Commentary<CR>
-vnoremap <C-_> :Commentary<CR>
 " }}}
 
 " Miscellaneous Options {{{
