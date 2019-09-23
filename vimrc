@@ -244,33 +244,53 @@ set writebackup
 " }}}
 
 " Remapping {{{
-let mapleader=","
+let mapleader="\<Space>"
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>e :Explore<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
+nnoremap <leader>n :noh<CR>
+
+" toggle folding by pressing space bar twice
+nnoremap <silent><Space><Space> za
 
 " move vertically by visual line
 nnoremap j gj
 nnoremap k gk
 
 " move half page up/down with j, k
-nnoremap <C-j> <C-d>
-nnoremap <C-k> <C-u>
+nnoremap J <C-d>
+nnoremap K <C-u>
 
 " create and move between tabs
 nnoremap tp :tabprev<CR>
 nnoremap tn :tabnext<CR>
 nnoremap to :tabonly<CR>
-nnoremap <expr> tt (v:count == 0 ? ":tabnew<CR>" : ":<C-U>execute v:count 'tabnext'<CR>")
+nnoremap <expr> tt (v:count == 0 ? ":tabnew<CR>"   : ":<C-U>execute v:count 'tabnext'<CR>")
 nnoremap <expr> tq (v:count == 0 ? ":tabclose<CR>" : ":<C-U>execute v:count 'tabclose'<CR>")
 
-" map the <Space> key to toggle a selected fold opened/closed.
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-vnoremap <Space> zf
+" Search for selected text, forwards or backwards.
+" - Press * to search forwards for selected text, or # to search backwards.
+" - As normal, press n for next search, or N for previous.
+" - Handles multiline selection and search.
+" - Whitespace in the selection matches any whitespace when searching
+" - Each search is placed in the search history allowing you to easily repeat previous searches.
+" - No registers are changed.
+" Reference: https://vim.fandom.com/wiki/Search_for_visually_selected_text
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
 
-" search for visually selected text
-vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>
+" comment quickly by Ctrl + / with vim-commentary
+nnoremap <C-_> :Commentary<CR>
+vnoremap <C-_> :Commentary<CR>
 " }}}
 
 " Miscellaneous Options {{{

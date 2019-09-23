@@ -1,26 +1,18 @@
 priority 1
 
-snippet it "italic font" w
-\textit{${1:${VISUAL}}}$0
-endsnippet
-
-snippet bf "bold font" w
-\textbf{${1:${VISUAL}}}$0
-endsnippet
-
-snippet tt "typewriter font" w
-\texttt{${1:${VISUAL}}}$0
-endsnippet
-
-snippet \it "individual item" b
-\item $0
+snippet "\\doc?u?(ment)?(class)?" "document class" br
+\documentclass`!p snip.rv = "[" if t[2] else ""`${2}`!p snip.rv = "]" if t[2] else ""`{${1:class}}$0
 endsnippet
 
 snippet "\\?incl?(ude)?(graphics)?" "insert graphic" wr
 \includegraphics[width=${2:${3}\textwidth}]{${1:path}}$0
 endsnippet
 
-# title <<<
+# Preamble <<<
+
+snippet "\\?usep?(ackage)?" "use package" br
+\usepackage`!p snip.rv = "[" if t[2] else ""`${2}`!p snip.rv = "]" if t[2] else ""`{${1:package}}$0
+endsnippet
 
 snippet "\\?tit?l?e?" "title" br
 \title{${1}}$0
@@ -36,15 +28,7 @@ endsnippet
 
 # >>>
 
-# environment <<<
-
-snippet "\\doc?u?(ment)?(class)?" "document class" br
-\documentclass`!p snip.rv = "[" if t[2] else ""`${2}`!p snip.rv = "]" if t[2] else ""`{${1:class}}$0
-endsnippet
-
-snippet "\\?usep?(ackage)?" "use package" br
-\usepackage`!p snip.rv = "[" if t[2] else ""`${2}`!p snip.rv = "]" if t[2] else ""`{${1:package}}$0
-endsnippet
+# Environment <<<
 
 snippet "begi?n?" "begin{} / end{}" br
 \begin{${1:whatever}}
@@ -56,6 +40,10 @@ snippet "docu?m?e?n?t?" "document environment" br
 \begin{document}
 ${0:${VISUAL}}
 \end{document}
+endsnippet
+
+snippet \it "individual item" b
+\item $0
 endsnippet
 
 priority 0
@@ -71,7 +59,23 @@ priority 1
 
 # >>>
 
-# math <<<
+# Text Style <<<
+
+snippet it "italic font" w
+\textit{${1:${VISUAL}}}$0
+endsnippet
+
+snippet bf "bold font" w
+\textbf{${1:${VISUAL}}}$0
+endsnippet
+
+snippet tt "typewriter font" w
+\texttt{${1:${VISUAL}}}$0
+endsnippet
+
+# >>>
+
+# Math <<<
 
 snippet $ "inline equation" w
 \$ ${1:${VISUAL}} \$$0
@@ -126,6 +130,16 @@ endsnippet
 snippet "(\S*)//" "fraction" r
 \frac{${1:`!p matched = match.group(1)
 snip.rv = matched if matched != None else ""`}}{${2}}$0
+endsnippet
+
+# >>>
+
+# Beamer <<<
+
+snippet "fram?e?" "frame environment" br
+\begin{frame}`!p snip.rv = "[" if t[2] else ""`${2:c}`!p snip.rv = "]" if t[2] else ""`{${1:title}}${3:[fragile]}
+	${0:${VISUAL}}
+\end{frame}
 endsnippet
 
 # >>>
