@@ -62,6 +62,18 @@ Plug 'dracula/vim'
 " A vim plugin to display the indentation levels with thin vertical lines
 Plug 'Yggdroot/indentLine'
 
+" fugitive.vim: A Git wrapper so awesome, it should be illegal
+Plug 'tpope/vim-fugitive'
+
+" vim-searchindex: display number of search matches & index of a current match
+Plug 'google/vim-searchindex'
+
+" *-Improved
+Plug 'haya14busa/vim-asterisk'
+
+" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks and partial hunks.
+Plug 'airblade/vim-gitgutter'
+
 call plug#end()
 " }}}
 
@@ -138,6 +150,13 @@ let g:neosnippet#snippets_directory = "$HOME/.config/nvim/snips"
 let g:UltiSnipsExpandTrigger="<TAB>"
 let g:UltiSnipsJumpForwardTrigger="<C-k>"
 let g:UltiSnipsJumpBackwardTrigger="<C-l>"
+" }}}
+
+" Plugin: vim-asterisk {{{
+map *  <Plug>(asterisk-z*)
+map #  <Plug>(asterisk-z#)
+map g* <Plug>(asterisk-gz*)
+map g# <Plug>(asterisk-gz#)
 " }}}
 
 " Spaces & Tabs {{{
@@ -249,7 +268,17 @@ nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>e :Explore<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
-nnoremap <leader>n :noh<CR>
+nnoremap <leader>h :noh<CR>
+
+" toggle folding
+nnoremap <leader>f zi
+
+" vim-fugitive functions
+nnoremap <leader>l :Gclog<CR>
+nnoremap <leader>d :Gdiffsplit<CR>
+
+" toggle paste mode
+nnoremap <leader>p :set invpaste paste?<CR>
 
 " toggle folding by pressing space bar twice
 nnoremap <silent><Space><Space> za
@@ -259,8 +288,10 @@ nnoremap j gj
 nnoremap k gk
 
 " move half page up/down with j, k
-nnoremap J <C-d>
-nnoremap K <C-u>
+nnoremap J 5j
+nnoremap K 5k
+nnoremap <C-j> <C-d>
+nnoremap <C-k> <C-u>
 
 " create and move between tabs
 nnoremap tp :tabprev<CR>
@@ -268,25 +299,6 @@ nnoremap tn :tabnext<CR>
 nnoremap to :tabonly<CR>
 nnoremap <expr> tt (v:count == 0 ? ":tabnew<CR>"   : ":<C-U>execute v:count 'tabnext'<CR>")
 nnoremap <expr> tq (v:count == 0 ? ":tabclose<CR>" : ":<C-U>execute v:count 'tabclose'<CR>")
-
-" Search for selected text, forwards or backwards.
-" - Press * to search forwards for selected text, or # to search backwards.
-" - As normal, press n for next search, or N for previous.
-" - Handles multiline selection and search.
-" - Whitespace in the selection matches any whitespace when searching
-" - Each search is placed in the search history allowing you to easily repeat previous searches.
-" - No registers are changed.
-" Reference: https://vim.fandom.com/wiki/Search_for_visually_selected_text
-vnoremap <silent> * :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
-vnoremap <silent> # :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy?<C-R><C-R>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " comment quickly by Ctrl + / with vim-commentary
 nnoremap <C-_> :Commentary<CR>
