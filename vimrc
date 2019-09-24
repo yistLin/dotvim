@@ -270,6 +270,12 @@ nnoremap <leader>e :Explore<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>h :noh<CR>
 
+" mark a word as good and add it to my spellfile
+nnoremap <leader>a zg
+
+" toggle spell check
+nnoremap <leader>s :setlocal spell! spell?<CR>
+
 " toggle folding
 nnoremap <leader>f zi
 
@@ -281,8 +287,8 @@ nnoremap <leader>d :Gdiffsplit<CR>
 nnoremap <leader>p :set invpaste paste?<CR>
 
 " comment quickly with vim-commentary
-nnoremap <leader>c :Commentary<CR>
-vnoremap <leader>c :Commentary<CR>
+nnoremap <leader>/ :Commentary<CR>
+vnoremap <leader>/ :Commentary<CR>
 
 " toggle folding by pressing space bar twice
 nnoremap <silent><Space><Space> za
@@ -312,4 +318,9 @@ set autoread        " re-read files if it's written outside
 set backspace=indent,eol,start
 let g:tex_flavor = "latex"  " see .tex file as latex instead of plaintex
 let g:tex_conceal = ''
+" }}}
+
+" Spell {{{
+set spelllang=en
+set spellfile=~/.config/nvim/spell/en.utf-8.add
 " }}}
