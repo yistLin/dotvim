@@ -74,6 +74,9 @@ Plug 'haya14busa/vim-asterisk'
 " A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks and partial hunks.
 Plug 'airblade/vim-gitgutter'
 
+" A tree explorer plugin for vim.
+Plug 'scrooloose/nerdtree'
+
 call plug#end()
 " }}}
 
@@ -103,13 +106,6 @@ endfunction
 function! LightlineFileencoding()
     return winwidth(0) > 70 ? &fileencoding : ''
 endfunction
-" }}}
-
-" Plugin: netrw {{{
-let g:netrw_banner = 0
-let g:netrw_preview = 1
-let g:netrw_winsize = 30
-let g:netrw_liststyle = 3
 " }}}
 
 " Plugin: vimtex {{{
@@ -159,6 +155,11 @@ map g* <Plug>(asterisk-gz*)
 map g# <Plug>(asterisk-gz#)
 " }}}
 
+" Plugin: NERDTree {{{
+let g:NERDTreeWinPos = "right"
+let g:NERDTreeQuitOnOpen = 1
+" }}}
+
 " Spaces & Tabs {{{
 set autoindent     " copy indent when starting a new line
 set expandtab      " expand tab to spaces
@@ -192,8 +193,8 @@ function s:auto_termguicolors()
         set notermguicolors
     endif
     set background=dark
-    colorscheme solarized8_flat
-    let g:lightline.colorscheme = "solarized"
+    colorscheme gruvbox
+    let g:lightline.colorscheme = "gruvbox"
 endfunction
 
 call s:auto_termguicolors()
@@ -222,6 +223,7 @@ set wrap
 set breakindent        " give indent to wrapped lines
 set showbreak=\ 
 set foldmethod=marker
+set conceallevel=0
 " }}}
 
 " Searching {{{
@@ -266,7 +268,7 @@ set writebackup
 let mapleader="\<Space>"
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
-nnoremap <leader>e :Explore<CR>
+nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>h :noh<CR>
 
@@ -290,8 +292,15 @@ nnoremap <leader>p :set invpaste paste?<CR>
 nnoremap <leader>/ :Commentary<CR>
 vnoremap <leader>/ :Commentary<CR>
 
+" close quickfix
+nnoremap <leader>c :ccl<CR>
+
 " toggle folding by pressing space bar twice
 nnoremap <silent><Space><Space> za
+
+" save/exit
+map qq :q<CR>
+nnoremap wq :wq<CR>
 
 " move vertically by visual line
 nnoremap j gj
