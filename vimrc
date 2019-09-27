@@ -1,15 +1,7 @@
 " Author: Yist Lin
 
-if has('vim')
-    set nocompatible  " required in VIM
-endif
-
 " vim-plug {{{
-if has('nvim')
-    call plug#begin('~/.local/share/nvim/plugged')
-else
-    call plug#begin('~/.vim/plugged')
-endif
+call plug#begin('~/.local/share/nvim/plugged')
 
 " A light and configurable statusline/tabline plugin for Vim
 Plug 'itchyny/lightline.vim'
@@ -24,18 +16,8 @@ Plug 'tpope/vim-commentary'
 Plug 'lifepillar/vim-solarized8'
 
 " Dark powered asynchronous completion framework for neovim/Vim8
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
-
-" neo-snippet plugin
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
 
 " UltiSnips - The ultimate snippet solution for Vim. Send pull requests to SirVer/ultisnips!
 Plug 'SirVer/ultisnips'
@@ -110,9 +92,7 @@ endfunction
 
 " Plugin: vimtex {{{
 let g:polyglot_disabled = [ "latex" ]
-if has('nvim')
-    let g:vimtex_compiler_progname = 'nvr'
-endif
+let g:vimtex_compiler_progname = 'nvr'
 call deoplete#custom#var('omni', 'input_patterns', {
     \ 'tex': g:vimtex#re#deoplete
     \ })
@@ -193,8 +173,8 @@ function s:auto_termguicolors()
         set notermguicolors
     endif
     set background=dark
-    colorscheme gruvbox
-    let g:lightline.colorscheme = "gruvbox"
+    colorscheme solarized8_flat
+    let g:lightline.colorscheme = "solarized"
 endfunction
 
 call s:auto_termguicolors()
