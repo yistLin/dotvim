@@ -116,6 +116,7 @@ let g:vimtex_compiler_latexmk = {
 
 " Plugin: indentLine {{{
 let g:indentLine_char = '┊'
+let g:indentLine_setConceal = 0
 " }}}
 
 " Plugin: neosnippet.vim {{{
