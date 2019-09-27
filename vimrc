@@ -1,15 +1,9 @@
 " Author: Yist Lin
 
-if has('vim')
-    set nocompatible  " required in VIM
-endif
+set nocompatible  " required in VIM
 
 " vim-plug {{{
-if has('nvim')
-    call plug#begin('~/.local/share/nvim/plugged')
-else
-    call plug#begin('~/.vim/plugged')
-endif
+call plug#begin('~/.vim/plugged')
 
 " A light and configurable statusline/tabline plugin for Vim
 Plug 'itchyny/lightline.vim'
@@ -23,29 +17,12 @@ Plug 'tpope/vim-commentary'
 " Optimized Solarized colorschemes. Best served with true-color terminals!
 Plug 'lifepillar/vim-solarized8'
 
-" Dark powered asynchronous completion framework for neovim/Vim8
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startup = 1
-
-" neo-snippet plugin
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
-
 " UltiSnips - The ultimate snippet solution for Vim. Send pull requests to SirVer/ultisnips!
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " A solid language pack for Vim 
 Plug 'sheerun/vim-polyglot'
-
-" deoplete.nvim source for Python
-Plug 'deoplete-plugins/deoplete-jedi'
 
 " Light & Dark color schemes inspired by Google Material's Design
 Plug 'NLKNguyen/papercolor-theme'
@@ -110,12 +87,6 @@ endfunction
 
 " Plugin: vimtex {{{
 let g:polyglot_disabled = [ "latex" ]
-if has('nvim')
-    let g:vimtex_compiler_progname = 'nvr'
-endif
-call deoplete#custom#var('omni', 'input_patterns', {
-    \ 'tex': g:vimtex#re#deoplete
-    \ })
 let g:vimtex_compiler_latexmk = {
     \ 'backend' : 'nvim', 
     \ 'background' : 1,
@@ -136,10 +107,6 @@ let g:vimtex_compiler_latexmk = {
 
 " Plugin: indentLine {{{
 let g:indentLine_char = '┊'
-" }}}
-
-" Plugin: neosnippet.vim {{{
-let g:neosnippet#snippets_directory = "$HOME/.config/nvim/snips"
 " }}}
 
 " Plugin: UltiSnips {{{
@@ -193,8 +160,8 @@ function s:auto_termguicolors()
         set notermguicolors
     endif
     set background=dark
-    colorscheme gruvbox
-    let g:lightline.colorscheme = "gruvbox"
+    colorscheme solarized8_high
+    let g:lightline.colorscheme = "solarized"
 endfunction
 
 call s:auto_termguicolors()
