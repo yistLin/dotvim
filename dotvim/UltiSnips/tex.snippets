@@ -55,6 +55,15 @@ snip.rv = match.group(2) if match.group(1) is not None else "something"`}}
 \end{$1}$0
 endsnippet
 
+snippet fig "Figure environment" b
+\begin{figure}[${2:htpb}]
+	\centering
+	${3:\shadowbox}`!p snip.rv = "{" if t[3] else ""`\includegraphics[width=${4:0.8}\linewidth]{${5:name.ext}}`!p snip.rv = "}" if t[3] else ""`
+	\caption{${5/(\w+)\.\w+/\u$1/}$0}%
+	\label{fig:${5/(\w+)\.\w+/$1/}}
+\end{figure}
+endsnippet
+
 priority 1
 
 # >>>
@@ -71,6 +80,10 @@ endsnippet
 
 snippet tt "typewriter font" w
 \texttt{${1:${VISUAL}}}$0
+endsnippet
+
+snippet em "emphsized font" w
+\emph{${1:${VISUAL}}}$0
 endsnippet
 
 # >>>
