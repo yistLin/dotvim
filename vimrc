@@ -17,6 +17,10 @@ Plug 'tpope/vim-commentary'
 " Optimized Solarized colorschemes. Best served with true-color terminals!
 Plug 'lifepillar/vim-solarized8'
 
+" Dark powered asynchronous completion framework for neovim/Vim8
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+
 " UltiSnips - The ultimate snippet solution for Vim. Send pull requests to SirVer/ultisnips!
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -54,6 +58,12 @@ Plug 'airblade/vim-gitgutter'
 " A tree explorer plugin for vim.
 Plug 'scrooloose/nerdtree'
 
+" A 24bit colorscheme for Vim, Airline and Lighline
+Plug 'jacoborus/tender.vim'
+
+" Adaptation of one-light and one-dark colorschemes for Vim
+Plug 'rakr/vim-one'
+
 call plug#end()
 " }}}
 
@@ -87,6 +97,10 @@ endfunction
 
 " Plugin: vimtex {{{
 let g:polyglot_disabled = [ "latex" ]
+let g:vimtex_compiler_progname = 'nvr'
+call deoplete#custom#var('omni', 'input_patterns', {
+    \ 'tex': g:vimtex#re#deoplete
+    \ })
 let g:vimtex_compiler_latexmk = {
     \ 'backend' : 'nvim', 
     \ 'background' : 1,
@@ -107,6 +121,7 @@ let g:vimtex_compiler_latexmk = {
 
 " Plugin: indentLine {{{
 let g:indentLine_char = '┊'
+let g:indentLine_setConceal = 0
 " }}}
 
 " Plugin: UltiSnips {{{
@@ -154,14 +169,27 @@ function s:auto_termguicolors()
     if !(has("termguicolors"))
         return
     endif
-    if (&term == 'xterm-256color' || &term == 'nvim') && !s:is_mosh()
-        set termguicolors
-    else
-        set notermguicolors
-    endif
+    set termguicolors
     set background=dark
-    colorscheme solarized8_high
-    let g:lightline.colorscheme = "solarized"
+    " let g:one_allow_italics=1
+    " colorscheme one
+    " let g:lightline.colorscheme = "one"
+    " let g:PaperColor_Theme_Options = {
+    "   \     'theme': {
+    "   \         'default.light': {
+    "   \             'allow_italic': 1,
+    "   \             'allow_bold': 1
+    "   \         }
+    "   \     }
+    "   \ }
+
+    " colorscheme PaperColor
+    " let g:lightline.colorscheme = "PaperColor"
+
+    let g:gruvbox_italic=1
+    let g:gruvbox_contrast_dark="hard"
+    colorscheme gruvbox
+    let g:lightline.colorscheme = "gruvbox"
 endfunction
 
 call s:auto_termguicolors()
@@ -188,9 +216,10 @@ filetype plugin on     " load ftplugin/example.vim
 set display+=lastline  " always display the last line
 set wrap
 set breakindent        " give indent to wrapped lines
-set showbreak=\ 
 set foldmethod=marker
 set conceallevel=0
+set scrolloff=3
+set linebreak
 " }}}
 
 " Searching {{{
@@ -232,7 +261,7 @@ set writebackup
 " }}}
 
 " Remapping {{{
-let mapleader="\<Space>"
+let mapleader=","
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
@@ -252,8 +281,9 @@ nnoremap <leader>f zi
 nnoremap <leader>l :Gclog<CR>
 nnoremap <leader>d :Gdiffsplit<CR>
 
-" toggle paste mode
-nnoremap <leader>p :set invpaste paste?<CR>
+" paste from yank register (won't be affected by default register)
+map <leader>p "0p
+map <leader>P "0P
 
 " comment quickly with vim-commentary
 nnoremap <leader>/ :Commentary<CR>
@@ -263,11 +293,10 @@ vnoremap <leader>/ :Commentary<CR>
 nnoremap <leader>c :ccl<CR>
 
 " toggle folding by pressing space bar twice
-nnoremap <silent><Space><Space> za
+nnoremap <silent><Space> za
 
 " save/exit
 map qq :q<CR>
-nnoremap wq :wq<CR>
 
 " move vertically by visual line
 nnoremap j gj
