@@ -5,21 +5,23 @@ The goal of this repo is to synchronize my configuration of VIM/NVIM across all 
 ### Setup
 
 First please refer to [vim-plug](https://github.com/junegunn/vim-plug) for the installation of vim-plug.
-Then clone this repo to wherever you like.
-After cloing simply create soft links to these files.
-
-#### Vim
+Then clone this repo to your **$HOME** directory with the following command:
 
 ~~~bash
-ln -s <path_to_this_repo>/vimrc  $HOME/.vimrc
-ln -s <path_to_this_repo>/dotvim $HOME/.vim
+git clone https://github.com/yistLin/vimconfig.git $HOME/.vim
 ~~~
 
-#### Neovim
+And put the following lines into your vimrc:
 
 ~~~bash
-ln -s <path_to_this_repo>/dotvim/* $HOME/.config/nvim/
-ln -s <path_to_this_repo>/vimrc    $HOME/.config/nvim/init.vim
+set nocompatible
+
+source $HOME/.vim/vimrcs/plugin.vim
+source $HOME/.vim/vimrcs/general.vim
+source $HOME/.vim/vimrcs/rendering.vim
+source $HOME/.vim/vimrcs/filetype.vim
+source $HOME/.vim/vimrcs/interface.vim
+source $HOME/.vim/vimrcs/mapping.vim
 ~~~
 
 Since I'm using **vim-plug** as plug-in manager, don't forget to run `:PlugInstall` while starting VIM/NVIM.
