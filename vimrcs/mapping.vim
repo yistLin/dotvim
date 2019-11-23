@@ -25,17 +25,14 @@ map <leader>p "0p
 map <leader>P "0P
 
 " comment quickly with vim-commentary
-nnoremap <leader>/ :Commentary<CR>
-vnoremap <leader>/ :Commentary<CR>
+nnoremap <C-_> :Commentary<CR>
+vnoremap <C-_> :Commentary<CR>
 
 " close quickfix
 nnoremap <leader>c :ccl<CR>
 
 " toggle folding by pressing space bar twice
 nnoremap <silent><Space> za
-
-" save/exit
-map qq :q<CR>
 
 " move vertically by visual line
 nnoremap j gj
@@ -44,8 +41,14 @@ nnoremap k gk
 " move half page up/down with j, k
 nnoremap J 5j
 nnoremap K 5k
-nnoremap <C-j> <C-d>
-nnoremap <C-k> <C-u>
+
+" retain the visual selection after shifting
+vnoremap > >gv
+vnoremap < <gv
+
+" move lines
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
 " create and move between tabs
 nnoremap tp :tabprev<CR>
