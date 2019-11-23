@@ -48,6 +48,9 @@ Plug 'airblade/vim-gitgutter'
 " A 24bit colorscheme for Vim, Airline and Lighline
 Plug 'jacoborus/tender.vim'
 
+" A code-completion engine for Vim
+Plug 'ycm-core/YouCompleteMe'
+
 call plug#end()
 
 " Plugin: Lightline {{{
@@ -83,10 +86,18 @@ let g:indentLine_char = '┊'
 let g:indentLine_setConceal = 0
 " }}}
 
+" Plugin: YouCompleteMe {{{
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" }}}
+
 " Plugin: UltiSnips {{{
-let g:UltiSnipsExpandTrigger="<TAB>"
-let g:UltiSnipsJumpForwardTrigger="<C-k>"
-let g:UltiSnipsJumpBackwardTrigger="<C-l>"
+let g:UltiSnipsSnippetsDir=$HOME.'/.vim/UltiSnips/'
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+let g:UltiSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsListSnippets="<C-l>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 " }}}
 
 " Plugin: vim-asterisk {{{
