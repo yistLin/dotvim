@@ -3,9 +3,9 @@
 let mapleader=","
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
-nnoremap <leader>e :NERDTreeToggle<CR>
+nnoremap <leader>e :Explore<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
-nnoremap <leader>h :noh<CR>
+nnoremap <leader>/ :noh<CR>
 
 " mark a word as good and add it to my spellfile
 nnoremap <leader>a zg
@@ -51,8 +51,15 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
 " create and move between tabs
-nnoremap tp :tabprev<CR>
-nnoremap tn :tabnext<CR>
-nnoremap to :tabonly<CR>
-nnoremap <expr> tt (v:count == 0 ? ":tabnew<CR>"   : ":<C-U>execute v:count 'tabnext'<CR>")
-nnoremap <expr> tq (v:count == 0 ? ":tabclose<CR>" : ":<C-U>execute v:count 'tabclose'<CR>")
+map <C-t>p :tabprev<CR>
+map <C-t>n :tabnext<CR>
+map <C-t>o :tabonly<CR>
+map <C-t>t :tabnew<CR>
+map <C-t>q :tabclose<CR>
+map <expr> tt (v:count == 0 ? ":tabnext<CR>"  : ":<C-U>execute v:count 'tabnext'<CR>")
+map <expr> tq (v:count == 0 ? ":tabclose<CR>" : ":<C-U>execute v:count 'tabclose'<CR>")
+
+" scroll wheel behavior
+set mouse=a
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelDown> <C-E>
