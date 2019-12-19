@@ -39,8 +39,8 @@ nnoremap j gj
 nnoremap k gk
 
 " move half page up/down with j, k
-nnoremap J 5j
-nnoremap K 5k
+nnoremap J <C-E>
+nnoremap K <C-Y>
 
 " retain the visual selection after shifting
 vnoremap > >gv
