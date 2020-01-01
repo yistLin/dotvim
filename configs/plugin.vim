@@ -63,7 +63,7 @@ let g:lightline = {
     \ 'active': {
     \     'left': [ [ 'mode', 'paste' ],
     \               [ 'readonly', 'filename', 'modified' ] ],
-    \     'right': [ [ 'percent' ],
+    \     'right': [ [ 'lineinfo', 'percent' ],
     \                [ 'fileformat', 'fileencoding', 'filetype' ] ]
     \ },
     \ 'component_function': {

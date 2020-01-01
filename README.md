@@ -18,7 +18,7 @@ set nocompatible
 source $HOME/.vim/vimrcs/plugin.vim
 source $HOME/.vim/vimrcs/general.vim
 source $HOME/.vim/vimrcs/rendering.vim
-source $HOME/.vim/vimrcs/filetype.vim
+source $HOME/.vim/vimrcs/color.vim
 source $HOME/.vim/vimrcs/interface.vim
 source $HOME/.vim/vimrcs/mapping.vim
 ~~~
