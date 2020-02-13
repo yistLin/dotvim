@@ -15,12 +15,12 @@ And put the following lines into your *.vimrc*:
 ~~~bash
 set nocompatible
 
-source $HOME/.vim/vimrcs/plugin.vim
-source $HOME/.vim/vimrcs/general.vim
-source $HOME/.vim/vimrcs/rendering.vim
-source $HOME/.vim/vimrcs/color.vim
-source $HOME/.vim/vimrcs/interface.vim
-source $HOME/.vim/vimrcs/mapping.vim
+source $HOME/.vim/configs/plugin.vim
+source $HOME/.vim/configs/general.vim
+source $HOME/.vim/configs/rendering.vim
+source $HOME/.vim/configs/color.vim
+source $HOME/.vim/configs/interface.vim
+source $HOME/.vim/configs/mapping.vim
 ~~~
 
 Since I'm using **vim-plug** as plug-in manager, don't forget to run `:PlugInstall` while starting VIM/NVIM.
