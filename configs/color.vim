@@ -9,9 +9,14 @@ if has("termguicolors")
 endif
 
 set background=dark
+" set background=light
 
-let g:gruvbox_italic=1
-let g:gruvbox_contrast_dark="hard"
-colorscheme gruvbox
+" let g:gruvbox_italic=1
+" let g:gruvbox_contrast_dark="hard"
+" colorscheme gruvbox
+colorscheme solarized8
+" colorscheme solarized8_high
+" colorscheme tender
 
-let g:lightline.colorscheme = "gruvbox"
+" let g:lightline.colorscheme = "gruvbox"
+let g:lightline.colorscheme = "solarized"

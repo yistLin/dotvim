@@ -42,7 +42,7 @@ Plug 'google/vim-searchindex'
 " *-Improved
 Plug 'haya14busa/vim-asterisk'
 
-" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks and partial hunks.
+" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks and partial hunks
 Plug 'airblade/vim-gitgutter'
 
 " A 24bit colorscheme for Vim, Airline and Lighline
@@ -51,10 +51,13 @@ Plug 'jacoborus/tender.vim'
 " A code-completion engine for Vim
 Plug 'ycm-core/YouCompleteMe'
 
-" Add maktaba and codefmt to the runtimepath.
+" Add maktaba and codefmt to the runtimepath
 " (The latter must be installed before it can be used.)
 Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
+
+" A tree explorer plugin for vim
+Plug 'preservim/nerdtree'
 
 call plug#end()
 
@@ -128,7 +131,16 @@ augroup autoformat_settings
   " autocmd FileType java AutoFormatBuffer google-java-format
   " autocmd FileType python AutoFormatBuffer yapf
   autocmd FileType python AutoFormatBuffer autopep8
-  " autocmd FileType rust AutoFormatBuffer rustfmt
+  autocmd FileType rust AutoFormatBuffer rustfmt
   " autocmd FileType vue AutoFormatBuffer prettier
 augroup END
+" }}}
+
+" Plugin: NERDTree {{{
+" open NERDTree automatically when vim starts up on opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | wincmd p | endif
+
+" close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}

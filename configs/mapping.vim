@@ -3,9 +3,8 @@
 let mapleader=","
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
-nnoremap <leader>e :Explore<CR>
+nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
-nnoremap <leader>/ :noh<CR>
 
 " mark a word as good and add it to my spellfile
 nnoremap <leader>a zg
@@ -17,16 +16,18 @@ nnoremap <leader>s :setlocal spell! spell?<CR>
 nnoremap <leader>f zi
 
 " vim-fugitive functions
-nnoremap <leader>l :Gclog<CR>
-nnoremap <leader>d :Gdiffsplit<CR>
+" nnoremap <leader>l :Gclog<CR>
+" nnoremap <leader>d :Gdiffsplit<CR>
 
 " paste from yank register (won't be affected by default register)
-map <leader>p "0p
-map <leader>P "0P
+" map <leader>p "0p
+" map <leader>P "0P
 
 " comment quickly with vim-commentary
-nnoremap <C-_> :Commentary<CR>
-vnoremap <C-_> :Commentary<CR>
+" nnoremap <C-_> :Commentary<CR>
+" vnoremap <C-_> :Commentary<CR>
+nnoremap <leader>/ :Commentary<CR>
+vnoremap <leader>/ :Commentary<CR>
 
 " close quickfix
 nnoremap <leader>c :ccl<CR>
@@ -56,10 +57,15 @@ map <C-t>n :tabnext<CR>
 map <C-t>o :tabonly<CR>
 map <C-t>t :tabnew<CR>
 map <C-t>q :tabclose<CR>
-map <expr> tt (v:count == 0 ? ":tabnext<CR>"  : ":<C-U>execute v:count 'tabnext'<CR>")
-map <expr> tq (v:count == 0 ? ":tabclose<CR>" : ":<C-U>execute v:count 'tabclose'<CR>")
+" map <expr> tt (v:count == 0 ? ":tabnext<CR>"  : ":<C-U>execute v:count 'tabnext'<CR>")
+" map <expr> tq (v:count == 0 ? ":tabclose<CR>" : ":<C-U>execute v:count 'tabclose'<CR>")
 
 " scroll wheel behavior
 set mouse=a
 map <ScrollWheelUp> <C-Y>
 map <ScrollWheelDown> <C-E>
+
+" buffer handling
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
+map <leader>b :buffers<CR>

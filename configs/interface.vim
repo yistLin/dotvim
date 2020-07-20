@@ -10,3 +10,4 @@ set visualbell    " flash the screen instead of beeping on errors
 set showcmd       " show the last command entered in the bottom line
 set wildmenu      " visual autocomplete for command menu
 set wildignore=*.swp,*.bak,*.pyc,*.class
+set cursorline
