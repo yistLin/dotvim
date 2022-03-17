@@ -48,9 +48,6 @@ Plug 'airblade/vim-gitgutter'
 " A 24bit colorscheme for Vim, Airline and Lighline
 Plug 'jacoborus/tender.vim'
 
-" A code-completion engine for Vim
-Plug 'ycm-core/YouCompleteMe'
-
 " Add maktaba and codefmt to the runtimepath
 " (The latter must be installed before it can be used.)
 Plug 'google/vim-maktaba'
@@ -92,16 +89,6 @@ endfunction
 " Plugin: indentLine {{{
 let g:indentLine_char = '┊'
 let g:indentLine_setConceal = 0
-" }}}
-
-" Plugin: YouCompleteMe {{{
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_server_python_interpreter = '/usr/bin/python'
-let g:ycm_python_binary_path = '$HOME/.pyenv/shims/python'
 " }}}
 
 " Plugin: UltiSnips {{{
